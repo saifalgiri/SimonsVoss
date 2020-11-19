@@ -1,0 +1,130 @@
+﻿@model SimonsVoss.Models.ModelViewData
+@{
+    ViewData["Title"] = "Home Page";
+}
+    @*<div class="container">
+        @using (Html.BeginForm("Search", "Home", FormMethod.Get))
+        {
+            <div class="row">
+                <div class="col-6 offset-6">
+                    <div class="input-group">
+                        <input type="text" id="searchText" name="searchText" class="form-control" placeholder="Enter search word here" required>
+                        <span class="input-group-btn">
+                            <button class="btn btn-info form-control" type="submit">Search</button>
+                        </span>
+                    </div>
+                </div>
+            </div>
+        }*@
+
+
+        <div class="row">
+            <div class="row" style="@(Model?.BuildingList.Count() > 0? "visibility:visible:":"visibility:hidden")">
+                <h3>Buildings</h3>
+            </div>
+            <div class="row" style="@(Model?.BuildingList.Count() == 0 && Model?.LockList.Count() > 0? "visibility:visible:":"visibility:hidden")">
+                <h3>Locks</h3>
+            </div>
+            <table class="table .table-striped">
+
+                @if (Model?.BuildingList != null && Model?.BuildingList.Count() > 0)
+                {
+                    <tr>
+                        <th>Building Name </th>
+                        <th>Shortcut </th>
+                        <th>Description </th>
+                        <th>Locks</th>
+                    </tr>
+                    foreach (var d in Model.BuildingList)
+                    {
+                        <tr>
+                            <td>@d.Name</td>
+                            <td>@d.Shrotcut</td>
+                            <td>@d.Description</td>
+                            <td>
+                                @Html.ActionLink("Locks", "Index", "Locks", new { Id = d.Id, Model.SearchText  }, null)
+                            </td>
+                        </tr>
+                    }
+                }
+                else if (Model != null && Model?.BuildingList.Count() == 0 && Model?.LockList.Count() > 0)
+                {
+                    <tr>
+                        <th>Lock Name</th>
+                        <th>Building Name</th>
+                        <th>Type </th>
+                        <th>Description</th>
+                        <th>Serial Number</th>
+                        <th>Floor</th>
+                        <th>Room Number</th>
+                    </tr>
+                    foreach (var d in Model.LockList)
+                    {
+                        <tr>
+                            <td>@d.Name</td>
+                            <td>@d.BuildingName</td>
+                            <td>@d.Type</td>
+                            <td>@d.Description</td>
+                            <td>@d.SerialNumber</td>
+                            <td>@d.Floor</td>
+                            <td>@d.RoomNumber</td>
+                        </tr>
+                    }
+                }
+            </table>
+        </div>
+        <!--Group-->
+        <div class="row">
+            <div class="row" style="@(Model?.GroupList.Count() > 0? "visibility:visible:":"visibility:hidden")">
+                <h3>Groups</h3>
+            </div>
+            <div class="row" style="@(Model?.GroupList.Count() == 0 && Model?.MediaList.Count() > 0? "visibility:visible:":"visibility:hidden")">
+                <h3>Media</h3>
+            </div>
+            <table class="table .table-striped">
+
+                @if (Model?.GroupList != null && Model?.GroupList.Count() > 0)
+                {
+                    <tr>
+                        <th>Group Name </th>
+                        <th>Description </th>
+                        <th>Media</th>
+                    </tr>
+                    foreach (var d in Model.GroupList)
+                    {
+                        <tr>
+                            <td>@d.Name</td>
+                            <td>@d.Description</td>
+                            <td>
+                                @Html.ActionLink("Media", "Index", "Media", new { Id = d.Id, Model.SearchText }, null)
+                            </td>
+                        </tr>
+                    }
+                }
+                else if (Model != null && Model?.MediaList.Count() > 0)
+                {
+                    <tr>
+                        <th>Group Name</th>
+                        <th>Type </th>
+                        <th>Owner</th>
+                        <th>Description</th>
+                        <th>Serial Number</th>
+                    </tr>
+                    foreach (var d in Model.MediaList)
+                    {
+                        <tr>
+                            <td>@d.GroupName</td>
+                            <td>@d.Type</td>
+                            <td>@d.Owner</td>
+                            <td>@d.Description</td>
+                            <td>@d.SerialNumber</td>
+                        </tr>
+                    }
+                }
+            </table>
+        </div>
+        <!--End of Group-->
+    </div>
+
+
+
